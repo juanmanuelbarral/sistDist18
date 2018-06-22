@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>FutSD - Calificacion</title>
+
+	<!-- CSS de Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- CSS Propio -->
+	<link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default borde-inferior navbar-fixed-top" id="barra-navegacion">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand marca" href="calificacion.html">
+                    <img src="img/logo-app.jpg" alt="logo" id="logo-app">
+                    FUT<span>SD</span>
+                </a>
+            </div>
+    
+            <div id="navbar-options" class="navbar-collapse collapse">
+                <!-- Secciones sobre la parte derecha -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="calificacion.html">Calificar</a></li>
+                    <li><a href="resultados.html">Resultados</a></li>
+                    <li><a href="ranking-fans.html">Ranking de fans</a></li>
+                    <li><a href="ranking-periodistas.html">Ranking de periodistas</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#modal-contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div id="app-calificacion">
+        <div class="container">
+            <div class="contenido">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="texto-azul">Selecciona un partido para calificar</h2>
+                        <div class="form-group">
+                            <label for="partido" class="texto-azul">Partido</label>
+                            <select name="partido" id="partido-filtro" class="form-control"
+                                <option value="" selected></option>
+                                <option v-for="partido in partidos_vue" v-bind:value="partido">
+                                    {{partido.local}} vs {{partido.visitante}} | {{partido.fecha}} {{partido.hora}}
+                                </option>
+                            </select>
+                            <button type="button" class="btn btn-danger">Calificar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contenido">
+                        <div class="info-equipo" v-for="equipo in equipos_vue">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="nombre-pais">{{equipo.nombre}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="jugadores">
+                            <div class="jugador" v-for="jugador in equipos_vue.jugadores">
+                                <p class="nombre-listado">{{jugador.nombre}}</p>
+                                <select name="calificacion" class="form-control calificacion"
+                                    <option value="" selected></option>
+                                    <option v-for="calificacion in calificaciones_vue" v-bind:value="calificacion">
+                                        {{calificacion}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+	<div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <ul>
+                        <li><a href="calificacion.html">Calificar</a></li>
+                        <li><a href="resultados.html">Resultados</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul>
+                        <li><a href="ranking-fans.html">Ranking de fans</a></li>
+                        <li><a href="ranking-periodistas.html">Ranking de periodistas</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <li><a href="#" data-toggle="modal" data-target="#modal-contacto">Contacto</a></li>
+                    <p>Copyright © FutSD 2018</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-contacto">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Contacto</h4>
+            </div>
+            <div class="modal-body">
+                <p class="etiqueta">Nombre</p>
+                <p class="info">Juan López</p>
+                <p class="etiqueta">Tipo de usuario</p>
+                <p class="info">Periodista</p>
+                <p class="etiqueta">Correo</p>
+                <p class="info">juanlopez@prueba.com</p>
+                <p class="etiqueta">Puntos</p>
+                <p class="info">50</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
+
+
+
+
+	<!-- JS de jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- JS de Bootstrap -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- JS de Vue.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+
+	<!-- JS Propio -->
+	<script src="js/app.js"></script>
+
+</body>
+</html>
