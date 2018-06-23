@@ -65,7 +65,7 @@
                                     {{partido.local}} vs {{partido.visitante}} | {{partido.fecha}} {{partido.hora}}
                                 </option>
                             </select>
-                            <button type="button" class="btn btn-danger">Calificar</button>
+                            <button type="button" class="btn btn-danger" id="btn-calificar">Calificar</button>
                         </div>
                     </div>
                 </div>
@@ -75,29 +75,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="contenido">
-                        <div class="info-equipo" v-for="equipo in equipos_vue">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
-                                </div>
-                                <div class="col-md-9">
-                                    <p class="nombre-pais">{{equipo.nombre}}</p>
-                                </div>
+                    <div class="info-equipo contenido" v-for="equipo in equipos_vue">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
+                            </div>
+                            <div class="col-md-9">
+                                <p class="nombre-pais">{{equipo.nombre}}</p>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="jugadores">
-                            <div class="jugador" v-for="jugador in equipos_vue.jugadores">
-                                <p class="nombre-listado">{{jugador.nombre}}</p>
-                                <select name="calificacion" class="form-control calificacion"
-                                    <option value="" selected></option>
-                                    <option v-for="calificacion in calificaciones_vue" v-bind:value="calificacion">
-                                        {{calificacion}}
-                                    </option>
-                                </select>
-                            </div>
+                    <div class="jugadores">
+                        <div class="jugador" v-for="jugador in jugadores_vue">
+                            <p class="nombre-listado">{{jugador.nombre}}</p>
+                            <select name="calificacion" class="form-control calificacion">
+                                <option value="" selected></option>
+                                <option v-for="calificacion in calificaciones_vue" v-bind:value="calificacion">
+                                    {{calificacion}}
+                                </option>
+                            </select>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="contenido centrar-contenido">
+                        <button type="button" class="btn btn-danger">Enviar Calificaciones</button>
                     </div>
                 </div>
             </div>
@@ -138,13 +143,13 @@
             </div>
             <div class="modal-body">
                 <p class="etiqueta">Nombre</p>
-                <p class="info">Juan López</p>
-                <p class="etiqueta">Tipo de usuario</p>
-                <p class="info">Periodista</p>
-                <p class="etiqueta">Correo</p>
-                <p class="info">juanlopez@prueba.com</p>
+                <p class="info">{{usuarioNombre}}</p>
+                <p class="etiqueta">Rol de usuario</p>
+                <p class="info">{{usuarioRol}}</p>
+                <p class="etiqueta">Email</p>
+                <p class="info">{{usuarioEmail}}</p>
                 <p class="etiqueta">Puntos</p>
-                <p class="info">50</p>
+                <p class="info">{{usuarioPuntos}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -19,6 +19,7 @@
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar navbar-default borde-inferior navbar-fixed-top" id="barra-navegacion">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -50,69 +51,49 @@
         <!-- /.container -->
     </nav>
 
-    <div class="container">
-        <div class="contenido">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="texto-azul">Selecciona un partido para ver los resultados</h2>
-                    <div class="form-group">
-                        <label for="partido" class="texto-azul">Partido</label>
-                        <select name="partido" id="partido-filtro" class="form-control"
-                            <option value="" selected></option>
-                            <!-- <option v-for="marca in marcas_vue" v-bind:value="marca">
-                                {{marca}}
-                            </option> -->
-                        </select>
-                        <button type="button" class="btn btn-danger">Ver</button>
+    <div id="app-resultados">
+        <div class="container">
+            <div class="contenido">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="texto-azul">Selecciona un partido para ver los resultados</h2>
+                        <div class="form-group">
+                            <label for="partido" class="texto-azul">Partido</label>
+                            <select name="partido" id="partido-filtro" class="form-control"
+                                <option value="" selected></option>
+                                <option v-for="partido in partidosTerminados_vue" v-bind:value="partido">
+                                    {{partido.local}} vs {{partido.visitante}} | {{partido.fecha}} {{partido.hora}}
+                                </option>
+                            </select>
+                            <button type="button" class="btn btn-danger">Ver</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="contenido">
-                    <div class="info-equipo">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="bandera"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contenido">
+                        <div class="info-equipo" v-for="equipo in equipos_vue">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="nombre-pais">{{equipo.nombre}}</p>
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                <p class="nombre-pais">Rusia</p>
+                        </div>
+
+                        <div class="jugadores">
+                            <div class="jugador" v-for="jugador in jugadoresEvaluados_vue">
+                                <p class="nombre-listado">{{jugador.nombre}}</p>
+                                <div class="calificacion caja">{{jugador.calificacion}}</div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="jugadores">
-                        <div class="jugador">
-                            <p class="nombre-listado">Nombre jugador</p>
-                            <div class="calificacion caja">8</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="contenido">
-                    <div class="info-equipo">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="bandera"></div>
-                            </div>
-                            <div class="col-md-9">
-                                <p class="nombre-pais">Arabia Saudita</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="jugadores">
-                            <div class="jugador">
-                                <p class="nombre-listado">Nombre jugador</p>
-                                <div class="calificacion caja">8</div>
-                            </div>
-                        </div>
                 </div>
             </div>
         </div>
@@ -152,13 +133,13 @@
             </div>
             <div class="modal-body">
                 <p class="etiqueta">Nombre</p>
-                <p class="info">Juan López</p>
-                <p class="etiqueta">Tipo de usuario</p>
-                <p class="info">Periodista</p>
-                <p class="etiqueta">Correo</p>
-                <p class="info">juanlopez@prueba.com</p>
+                <p class="info">{{usuarioNombre}}</p>
+                <p class="etiqueta">Rol de usuario</p>
+                <p class="info">{{usuarioRol}}</p>
+                <p class="etiqueta">Email</p>
+                <p class="info">{{usuarioEmail}}</p>
                 <p class="etiqueta">Puntos</p>
-                <p class="info">50</p>
+                <p class="info">{{usuarioPuntos}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
