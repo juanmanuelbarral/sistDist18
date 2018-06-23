@@ -37,6 +37,8 @@ var appCalificacion = new Vue({
         // a su vez, lo jugadores tienen que tener un atributo IDEQUIPO, IDJUGADOR y NOMBRE
         calificaciones_vue : [],
         // crear la lista de calificaciones
+        partido_selected : "",
+
     }
 });
 
@@ -52,6 +54,7 @@ var appResultados = new Vue({
         jugadoresEvaluados_vue : [],
         // JUGADORES (una lista de los jugadores evaluados de los equipos seleccionados)
         // a su vez, lo jugadores tienen que tener un atributo IDEQUIPO, IDJUGADOR, NOMBRE y CALIFICACION
+        partido_selected : "",
     }
 });
 
