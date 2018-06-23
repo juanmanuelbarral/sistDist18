@@ -19,6 +19,7 @@
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar navbar-default borde-inferior navbar-fixed-top" id="barra-navegacion">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -58,7 +59,7 @@
                         <h2 class="texto-azul">Selecciona un partido para calificar</h2>
                         <div class="form-group">
                             <label for="partido" class="texto-azul">Partido</label>
-                            <select name="partido" id="partido-filtro" class="form-control"
+                            <select name="partido" id="partido-filtro" class="form-control">
                                 <option value="" selected></option>
                                 <option v-for="partido in partidos_vue" v-bind:value="partido">
                                     {{partido.local}} vs {{partido.visitante}} | {{partido.fecha}} {{partido.hora}}
