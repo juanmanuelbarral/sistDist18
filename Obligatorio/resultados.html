@@ -85,12 +85,11 @@
                                     <p class="nombre-pais">{{equipo.nombre}}</p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="jugadores">
-                            <div class="jugador" v-for="jugador in jugadoresEvaluados_vue">
-                                <p class="nombre-listado">{{jugador.nombre}}</p>
-                                <div class="calificacion caja">{{jugador.calificacion}}</div>
+                            <div class="jugadores">
+                                <div class="jugador" v-for="jugador in jugadoresEvaluados_vue">
+                                    <p class="nombre-listado" v-if="equipo.id == jugador.idEquipo">{{jugador.nombre}}</p>
+                                    <div class="calificacion caja" v-if="equipo.id == jugador.idEquipo">{{jugador.calificacion}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>

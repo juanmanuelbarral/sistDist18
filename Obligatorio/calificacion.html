@@ -75,26 +75,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="info-equipo contenido" v-for="equipo in equipos_vue">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
+                    <div class="contenido">
+                        <div class="info-equipo" v-for="equipo in equipos_vue">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="nombre-pais">{{equipo.nombre}}</p>
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                <p class="nombre-pais">{{equipo.nombre}}</p>
+                            <div class="jugadores">
+                                <div class="jugador" v-for="jugador in jugadores_vue">
+                                    <p class="nombre-listado" v-if="equipo.id == jugador.idEquipo">{{jugador.nombre}}</p>
+                                    <select name="calificacion" class="form-control calificacion" v-if="equipo.idEquipo == jugador.idEquipo">
+                                        <option value="" selected></option>
+                                        <option v-for="calificacion in calificaciones_vue" v-bind:value="calificacion">
+                                            {{calificacion}}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="jugadores">
-                        <div class="jugador" v-for="jugador in jugadores_vue">
-                            <p class="nombre-listado">{{jugador.nombre}}</p>
-                            <select name="calificacion" class="form-control calificacion">
-                                <option value="" selected></option>
-                                <option v-for="calificacion in calificaciones_vue" v-bind:value="calificacion">
-                                    {{calificacion}}
-                                </option>
-                            </select>
                         </div>
                     </div>
                 </div>

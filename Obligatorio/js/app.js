@@ -29,12 +29,12 @@ var appCalificacion = new Vue({
     data: {
         // DATOS DEL VUE
         partidos_vue : [],
-        // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDENTIFICADOR DEL PARTIDO
+        // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDPARTIDO
         equipos_vue : [],
-        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), IDENTIFICADOR DEL EQUIPO
+        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), IDEQUIPO
         jugadores_vue : [],
         // JUGADORES (una lista de los jugadores de los equipos seleccionados)
-        // a su vez, lo jugadores tienen que tener un atributo IDENTIFICADOR DEL EQUIPO, IDENTIFICADOR DEL JUGADOR y NOMBRE
+        // a su vez, lo jugadores tienen que tener un atributo IDEQUIPO, IDJUGADOR y NOMBRE
         calificaciones_vue : [],
         // crear la lista de calificaciones
     }
@@ -46,12 +46,12 @@ var appResultados = new Vue({
     data: {
         // DATOS DEL VUE
         partidosTerminados_vue : [],
-        // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDENTIFICADOR DEL PARTIDO
+        // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDPARTIDO
         equipos_vue : [],
-        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), IDENTIFICADOR DEL EQUIPO
+        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), IDEQUIPO
         jugadoresEvaluados_vue : [],
         // JUGADORES (una lista de los jugadores evaluados de los equipos seleccionados)
-        // a su vez, lo jugadores tienen que tener un atributo IDENTIFICADOR DEL EQUIPO, IDENTIFICADOR DEL JUGADOR, NOMBRE y CALIFICACION
+        // a su vez, lo jugadores tienen que tener un atributo IDEQUIPO, IDJUGADOR, NOMBRE y CALIFICACION
     }
 });
 

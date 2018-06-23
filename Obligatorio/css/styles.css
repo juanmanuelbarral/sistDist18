@@ -176,6 +176,10 @@ a:hover{
     align-items: center;
 }
 
+.jugadores{
+    margin-top: 10px;
+}
+
 @media (max-width: 797px){
     
 }
