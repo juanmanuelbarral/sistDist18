@@ -35,10 +35,10 @@ var appCalificacion = new Vue({
         partidos_vue : [],
         // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDPARTIDO
         equipos_vue : [],
-        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), IDEQUIPO
+        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), EQUIPO
         jugadores_vue : [],
         // JUGADORES (una lista de los jugadores de los equipos seleccionados)
-        // a su vez, lo jugadores tienen que tener un atributo IDEQUIPO, IDJUGADOR y NOMBRE, CALIFICACION
+        // a su vez, lo jugadores tienen que tener un atributo EQUIPO, IDJUGADOR y NOMBRE, CALIFICACION
         calificaciones_vue : [],
         // crear la lista de calificaciones
         partido_selected : "",
@@ -54,10 +54,10 @@ var appResultados = new Vue({
         partidosTerminados_vue : [],
         // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDPARTIDO
         equipos_vue : [],
-        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), IDEQUIPO
+        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), EQUIPO
         jugadoresEvaluados_vue : [],
         // JUGADORES (una lista de los jugadores evaluados de los equipos seleccionados)
-        // a su vez, lo jugadores tienen que tener un atributo IDEQUIPO, IDJUGADOR, NOMBRE y CALIFICACION
+        // a su vez, lo jugadores tienen que tener un atributo EQUIPO, IDJUGADOR, NOMBRE y CALIFICACION
         partido_selected : "",
     }
 });
@@ -191,12 +191,12 @@ $("#btn-calificar").on("click", function(){
         for(var i=0; i<2; i++){
             $.ajax({
                 method : "GET",
-                url : direJugadores + appCalificacion.equipos_vue[i].idEquipo,
+                url : direJugadores + appCalificacion.equipos_vue[i].equipo,
                 success : function (data) {
                     auxJugadores = auxJugadores.concat(data);
                 },
                 error : function() {
-                    alert("No se pudo obtener la info de la jugadores del equipo" + appCalificacion.equipos_vue[i].idEquipo + "!");
+                    alert("No se pudo obtener la info de la jugadores del equipo" + appCalificacion.equipos_vue[i].equipo + "!");
                 }
             });
         }
@@ -218,7 +218,7 @@ $("#btn-enviar-calificaciones").on("click", function(){
     
     appCalificacion.jugadores_vue.array.forEach(function(jugador){
         if(jugador.calificacion != 0){
-            calificacion.idEquipo = jugador.idEquipo;
+            calificacion.idEquipo = jugador.equipo;
             calificacion.camisetaJugador = jugador.camisetaJugador;
             calificacion.calificacion = jugador.calificacion;
             
