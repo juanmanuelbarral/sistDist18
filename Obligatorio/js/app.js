@@ -187,21 +187,45 @@ $("#btn-calificar").on("click", function(){
         //Obtengo los jugadores de cada equipo
         var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
         var auxJugadores = [];
-        var aux;
+        // var aux;
 
-        for(var i=0; i<2; i++){
-            aux = direJugadores + appCalificacion.equipos_vue[i].equipo;
-            $.ajax({
-                method : "GET",
-                url : aux,
-                success : function (data) {
-                    auxJugadores = auxJugadores.concat(data);
-                },
-                error : function() {
-                    alert("No se pudo obtener la info de la jugadores del equipo" + appCalificacion.equipos_vue[i].equipo + "!");
-                }
-            });
-        }
+        // for(var i=0; i<2; i++){
+        //     aux = direJugadores + appCalificacion.equipos_vue[i].equipo;
+        //     $.ajax({
+        //         method : "GET",
+        //         url : aux,
+        //         success : function (data) {
+        //             auxJugadores = auxJugadores.concat(data);
+        //         },
+        //         error : function() {
+        //             alert("No se pudo obtener la info de la jugadores del equipo" + appCalificacion.equipos_vue[i].equipo + "!");
+        //         }
+        //     });
+        // }
+
+        var aux1 = direJugadores + partido.local.equipo;
+        $.ajax({
+            method : "GET",
+            url : aux1,
+            success : function (data) {
+                auxJugadores = auxJugadores.concat(data);
+            },
+            error : function() {
+                alert("No se pudo obtener la info de la jugadores del equipo" + partido.local.equipo + "!");
+            }
+        });
+
+        var aux2 = direJugadores + partido.visita.equipo;
+        $.ajax({
+            method : "GET",
+            url : aux2,
+            success : function (data) {
+                auxJugadores = auxJugadores.concat(data);
+            },
+            error : function() {
+                alert("No se pudo obtener la info de la jugadores del equipo" + partido.visita.equipo + "!");
+            }
+        });
         
         appCalificacion.jugadores_vue = auxJugadores;
     }
