@@ -62,7 +62,7 @@
                             <select name="partido" id="partido-filtro" class="form-control" v-model="partido_selected">
                                 <option value="" selected></option>
                                 <option v-for="partido in partidos_vue" v-bind:value="partido">
-                                    {{partido.local}} vs {{partido.visitante}} | {{partido.fecha}} {{partido.hora}}
+                                    {{partido.local.nombre}} vs {{partido.visita.nombre}} | {{partido.date}}
                                 </option>
                             </select>
                             <button type="button" class="btn btn-danger" id="btn-calificar">Calificar</button>
@@ -79,14 +79,14 @@
                         <div class="info-equipo">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
+                                    <img v-bind:src="equipo.urlFoto" alt="" class="img-thumbnail bandera">
                                 </div>
                                 <div class="col-md-9">
                                     <p class="nombre-pais">{{equipo.nombre}}</p>
                                 </div>
                             </div>
                             <div class="jugadores">
-                                <div class="jugador" v-for="jugador in jugadores_vue" v-if="equipo.idEquipo == jugador.idEquipo">
+                                <div class="jugador" v-for="jugador in jugadores_vue" v-if="equipo.idEquipo == jugador.equipo">
                                     <p class="nombre-listado">{{jugador.nombre}}</p>
                                     <select name="calificacion" class="form-control calificacion" v-model="jugador.calificacion">
                                         <option value="0" selected></option>

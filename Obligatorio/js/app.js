@@ -1,6 +1,10 @@
+// ROLES
+// periodista = 1
+// fan = 2
+
 var usuario = {
-    id : "",
-    rol : "",
+    id : 0,
+    rol : 2,
 };
 
 var calificacion = {
@@ -111,7 +115,29 @@ $("#btn-ingresar").on("click", function(){
 
 // ------------------------------- para pagina REGISTRAR -----------------------------------------
 // Funcion que se ejecuta al presionar el boton REGISTRAR
-
+$("#btn-registrar").on("click", function(){
+    // GET con parametros los datos del usuario
+    // $.ajax({
+    //     method : "GET",
+    //     url : "https://hakkjhjk.edu.uy/api/brands", //--> GET para comprobar los datos del usuario pasando parametros
+    //     success : function (data) {
+    //         usuario.id = data.email;
+    //         usuario.rol = data.rol;
+    //         modalContacto.usuarioNombre = data.nombre;
+    //         modalContacto.usuarioEmail = data.email;
+    //         modalContacto.usuarioRol = data.rol;
+    //         modalContacto.usuarioPuntos = data.puntos;
+    //         //cargar calificacion.html
+    //         var direccion = window.location.href.split("/");
+    //         direccion[direccion.length-1] = "calificacion.html";
+    //         direccion = direccion.join("/");
+    //         window.location.href = direccion;
+    //     },
+    //     error : function() {
+    //         alert("El loggeo no fue exitoso, revise los datos ingresados");
+    //     }
+    // });
+});
 // ------------------------------- para pagina REGISTRAR -----------------------------------------
 
 
@@ -120,9 +146,15 @@ $("#btn-ingresar").on("click", function(){
 // Funcion que se ejecuta al cargar la pagina Calificacion
 function onLoadCalificacion(){
     // Solicitud AJAX con jQuery para obtener los partidos que se pueden calificar
+    var direccion = "localhost:8080/rest/matches/";
+    if(usuario.rol == 1){
+        direccion += "allGamesPeriodista";
+    } else{
+        direccion += "allGamesAficionado";
+    }
     $.ajax({
         method : "GET",
-        url : "https://hakkjhjk.edu.uy/api/brands", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS A SER JUGADOS
+        url : direccion,
         success : function (data) {
             appCalificacion.partidos_vue = data;
         },
@@ -144,34 +176,26 @@ $("#btn-calificar").on("click", function(){
     var partido = appCalificacion.partido_selected;
     if(partido != ""){
         //Obtengo la info de los equipos
+        appCalificacion.equipos_vue = [];
         appCalificacion.equipos_vue.push(partido.local);
-        appCalificacion.equipos_vue.push(partido.visitante);
+        appCalificacion.equipos_vue.push(partido.visita);
         
         //Obtengo los jugadores de cada equipo
+        var direJugadores = "localhost:8080/rest/players/allPlayers/id?id=";
         var auxJugadores = [];
-        //Jugadores del local
-        $.ajax({
-            method : "GET",
-            // url : "https://ha.edu.uy/api/brands", --> LINK PARA JUGADORES LOCALES
-            success : function (data) {
-                auxJugadores = auxJugadores.concat(data);
-            },
-            error : function() {
-                alert("No se pudo obtener la info de la jugadores locales!");
-            }
-        });
-        
-        //Jugadores del visitante
-        $.ajax({
-            method : "GET",
-            // url : "https://ha.edu.uy/api/brands", --> LINK PARA JUGADORES VISITANTES
-            success : function (data) {
-                auxJugadores = auxJugadores.concat(data);
-            },
-            error : function() {
-                alert("No se pudo obtener la info de la jugadores locales!");
-            }
-        });
+
+        for(var i=0; i<2; i++){
+            $.ajax({
+                method : "GET",
+                url : direJugadores + appCalificacion.equipos_vue[i].idEquipo,
+                success : function (data) {
+                    auxJugadores = auxJugadores.concat(data);
+                },
+                error : function() {
+                    alert("No se pudo obtener la info de la jugadores del equipo" + appCalificacion.equipos_vue[i].idEquipo + "!");
+                }
+            });
+        }
         
         appCalificacion.jugadores_vue = auxJugadores;
     }
