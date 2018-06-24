@@ -7,15 +7,6 @@ var usuario = {
     rol : 2,
 };
 
-var calificacion = {
-    idUsuario : "",
-    rolUsuario : "",
-    idPartido : "",
-    idEquipo : "",
-    camisetaJugador : "",
-    calificacion : 0,
-};
-
 // Objeto Vue para el modal
 var modalContacto = new Vue({
     el: "#modal-contacto",
@@ -296,39 +287,24 @@ $("#btn-calificar").on("click", function(){
 // al servidor para que las haga persistentes en la base de datos
 // mostrar mensajes de si se pudo o no registrar dichas predicciones
 $("#btn-enviar-calificaciones").on("click", function(){
-    var calificaciones = [];
-    calificacion.idUsuario = usuario.email;
-    calificacion.rolUsuario = usuario.rol;
-    calificacion.idPartido = appCalificacion.partido_selected.idPartido;
+    var id_partido = partido_selected.id;
     
     appCalificacion.jugadores_vue.array.forEach(function(jugador){
+        
         if(jugador.calificacion != 0){
-            calificacion.idEquipo = jugador.equipo;
-            calificacion.camisetaJugador = jugador.camisetaJugador;
-            calificacion.calificacion = jugador.calificacion;
-            
-            var jsonCalificacion = JSON.stringify(calificacion);
-            calificaciones.push(jsonCalificacion);
+            $.ajax({
+                method : "POST",
+                url : "http://localhost:8080/rest/players/calificar?idUsuario=" + usuario.email + "&id_partido=" + id_partido + "&jugador_camiseta=" + jugador.camiseta + "&id_equipo=" + jugador.equipo + "&puntaje=" + jugador.calificacion,
+                data : JSON.stringify(calificaciones),
+                success : function (data) {
+                    console.log("se enviaron calificaciones");
+                },
+                error : function() {
+                    console.log("error en envio de calificaciones");
+                }
+            });
         }
     });
-    //en calificaciones estan todos los jsons de calificaciones
-    
-    //Hago un POST con las calificaciones
-    $.ajax({
-        method : "POST",
-        // url : "https://ha.edu.uy/api/brands", --> LINK PARA RECIBIR LAS CALIFICACIONES
-        data : JSON.stringify(calificaciones),
-        success : function (data) {
-            alert("Se enviaron tus calificaciones!");
-        },
-        error : function() {
-            alert("Lo sentimos pero no se pudieron enviar tus calificaciones!");
-        }
-    });
-    
-    calificacion.idEquipo = "";
-    calificacion.camisetaJugador = "";
-    calificacion.calificacion = 0;
 });
 // ------------------------------- para pagina CALIFICACION -----------------------------------------
 
