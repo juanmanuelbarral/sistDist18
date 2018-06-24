@@ -33,7 +33,7 @@ var appCalificacion = new Vue({
     data: {
         // DATOS DEL VUE
         partidos_vue : [],
-        // Objetos partido:{local <objeto equipo>, visita <objeto equipo>, date, idParido}
+        // Objetos partido:{local_nombre, visita_nombre, local_equipo <id del equipo>, visita_equipo <id del equipo>, date, id <id del partido>}
         equipos_vue : [],
         // Objetos equipo:{equipo <id del equipo>, nombre, urlFoto}
         jugadores_vue : [],
@@ -41,6 +41,14 @@ var appCalificacion = new Vue({
         calificaciones_vue : [],
         partido_selected : "",
         
+    },
+    methods: {
+        sortCamiseta: function(jugadores) {
+          // Set slice() to avoid to generate an infinite loop!
+          return jugadores.slice().sort(function(a, b) {
+            return a.camiseta - b.camiseta;
+          });
+        }
     }
 });
 
@@ -50,12 +58,20 @@ var appResultados = new Vue({
     data: {
         // DATOS DEL VUE
         partidosTerminados_vue : [],
-        // Objetos partido:{local <objeto equipo>, visita <objeto equipo>, date, idParido}
+        // Objetos partido:{local_nombre, visita_nombre, local_equipo <id del equipo>, visita_equipo <id del equipo>, date, id <id del partido>}
         equipos_vue : [],
         // Objetos equipo:{equipo <id del equipo>, nombre, urlFoto}
         jugadoresEvaluados_vue : [],
         // Objetos jugadores:{equipo <id del equipo pertenecen>, camiseta, nombre, calificacion <=0>}
         partido_selected : "",
+    },
+    methods: {
+        sortCamiseta: function(jugadores) {
+          // Set slice() to avoid to generate an infinite loop!
+          return jugadores.slice().sort(function(a, b) {
+            return a.camiseta - b.camiseta;
+          });
+        }
     }
 });
 
@@ -157,39 +173,68 @@ $("#btn-calificar").on("click", function(){
     var partido = appCalificacion.partido_selected;
     if(partido != ""){
         //Obtengo la info de los equipos
-        appCalificacion.equipos_vue = [];
-        appCalificacion.equipos_vue.push(partido.local);
-        appCalificacion.equipos_vue.push(partido.visita);
-        
-        //Obtengo los jugadores de cada equipo
+        var direEquipos = "http://localhost:8080/rest/fotos/load/local?local=";
         var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
+        var aux = "";
         var auxJugadores = [];
+        appCalificacion.equipos_vue = [];
 
-        var aux1 = direJugadores + partido.local.equipo;
+        //GET del equipo local
+        aux = direEquipos + partido.local_equipo;
         $.ajax({
             method : "GET",
-            url : aux1,
+            url : aux,
             success : function (data) {
-                auxJugadores = auxJugadores.concat(data);
-                var aux2 = direJugadores + partido.visita.equipo;
+                // Inserto el equipo en el array de equipos del vue
+                appCalificacion.equipos_vue.push(data);
+                
+                // GET del equipo visita
+                aux = direEquipos + partido.visita_equipo;
                 $.ajax({
                     method : "GET",
-                    url : aux2,
+                    url : aux,
                     success : function (data) {
-                        auxJugadores = auxJugadores.concat(data);
-
-                        appCalificacion.jugadores_vue = auxJugadores;
+                        // Inserto el equipo en el array de equipos del vue
+                        appCalificacion.equipos_vue.push(data);
+                        
+                        //Obtengo los jugadores del equipo local
+                        aux = direJugadores + partido.local_equipo;
+                        $.ajax({
+                            method : "GET",
+                            url : aux,
+                            success : function (data) {
+                                auxJugadores = auxJugadores.concat(data);
+                                
+                                // Obtengo los jugadores del equipo visitante
+                                aux = direJugadores + partido.visita_equipo;
+                                $.ajax({
+                                    method : "GET",
+                                    url : aux,
+                                    success : function (data) {
+                                        auxJugadores = auxJugadores.concat(data);
+                                        
+                                        //Inserto los jugadores en el array de jugadores de vue
+                                        appCalificacion.jugadores_vue = auxJugadores;
+                                    },
+                                    error : function() {
+                                        alert("No se pudo obtener la info de los jugadores de " + partido.visita_nombre + "!");
+                                    }
+                                });
+                            },
+                            error : function() {
+                                alert("No se pudo obtener la info de la jugadores de " + partido.local_nombre + "!");
+                            }
+                        });
                     },
                     error : function() {
-                        alert("No se pudo obtener la info de la jugadores del equipo" + partido.visita.equipo + "!");
+                        alert("No se pudo obtener la info de " + partido.visita_nombre + "!");
                     }
                 });
             },
             error : function() {
-                alert("No se pudo obtener la info de la jugadores del equipo" + partido.local.equipo + "!");
+                alert("No se pudo obtener la info de " + partido.local_nombre + "!");
             }
         });
-
         
     }
 });

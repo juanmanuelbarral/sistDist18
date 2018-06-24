@@ -62,7 +62,7 @@
                             <select name="partido" id="partido-filtro" class="form-control" v-model="partido_selected">
                                 <option value="" selected></option>
                                 <option v-for="partido in partidosTerminados_vue" v-bind:value="partido">
-                                    {{partido.local.nombre}} vs {{partido.visita.nombre}} | {{partido.date}}
+                                    {{partido.local_nombre}} vs {{partido.visita_nombre}} | {{partido.date}}
                                 </option>
                             </select>
                             <button type="button" class="btn btn-danger" id="btn-ver">Ver</button>
@@ -86,8 +86,8 @@
                                 </div>
                             </div>
                             <div class="jugadores">
-                                <div class="jugador" v-for="jugador in jugadoresEvaluados_vue" v-if="(equipo.equipo == jugador.equipo) && (jugador.camiseta != '')">
-                                    <p class="nombre-listado">{{jugador.nombre}}</p>
+                                <div class="jugador" v-for="jugador in sortCamiseta(jugadoresEvaluados_vue)" v-if="(equipo.equipo == jugador.equipo) && (jugador.camiseta != '')">
+                                    <p class="nombre-listado">{{jugador.camiseta}} - {{jugador.nombre}}</p>
                                     <div class="calificacion caja">{{jugador.calificacion}}</div>
                                 </div>
                             </div>
