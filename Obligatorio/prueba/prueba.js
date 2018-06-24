@@ -17,6 +17,8 @@ var app = new Vue({
             }
         ],
         calificaciones_vue : [],
+        texto_selected : "",
+        hola:"",
 
     }
 });
@@ -52,9 +54,9 @@ function comprobacion(lista){
 
 var jsonson = JSON.stringify(app.personas[0]);
 
-function hola(){
-    alert("hola");
-}
+// function hola(){
+//     alert("hola");
+// }
 
 
 // Boton para enviar las calificaciones al servidor
@@ -90,4 +92,19 @@ function enviarCalificacionesRecursiva(idUsuario,idPartido, listaJugadores, indi
             console.log("calificacion de 0 encontrada");
         }
     }
+}
+
+$("#btn").on("click", function(){
+    var texto = app.texto_selected;
+    localStorage.setItem("texto",texto);
+
+    var direccion = window.location.href.split("/");
+    direccion[direccion.length-1] = "prueba2.html";
+    direccion = direccion.join("/");
+    window.location.href = direccion;
+});
+
+
+function onload(){
+    app.hola = localStorage.getItem("texto");
 }

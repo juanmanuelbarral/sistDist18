@@ -17,26 +17,12 @@
 
 </head>
 
-<body>
+<body onload="onload()">
 
 	<div class="contenido" id="prueba">
 		<div class="jugador" v-for="persona in personas">
-			<p class="nombre-listado">{{persona.nombre}}</p>
-			<select name="calificacion" class="form-control calificacion" v-model="persona.calificacion">
-				<option value="0"></option>
-				<option v-for="calificacion in calificaciones_vue" v-bind:value="calificacion">
-					{{calificacion}}
-				</option>
-			</select>
-			<div>
-				Valor seleccionado: {{persona.calificacion}}
-			</div>
+            {{hola}}
 		</div>
-		<div class="form-group">
-			<label for="inputTexto" class="texto-azul">texto</label>
-			<input type="text" class="form-control" id="inputTexto" placeholder="texto" v-model="texto_selected">
-		</div>
-		<button type="button" class="btn btn-danger" id="btn">proxima pag</button>
 	</div>
 
 

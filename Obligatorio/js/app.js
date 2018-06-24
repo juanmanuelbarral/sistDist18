@@ -109,6 +109,19 @@ var appRankingPeriodistas = new Vue({
     }
 });
 
+function alIniciar(){
+    usuario.email = localStorage.getItem("email");
+    modalContacto.usuarioEmail = localStorage.getItem("email");
+    modalContacto.usuarioRol = localStorage.getItem("rol");
+    if(modalContacto.usuarioRol == "Periodista"){
+        usuario.rol = 1;
+    } else{
+        usuario.rol = 2;
+    }
+    modalContacto.usuarioNombre = localStorage.getItem("nombre");
+    modalContacto.usuarioApellido = localStorage.getItem("apellido");
+}
+
 
 
 // ------------------------------- para pagina INDEX -----------------------------------------
@@ -129,17 +142,21 @@ $("#btn-ingresar").on("click", function(){
         url : direLogin,
         success : function (data) {
             if(data != ""){
+                localStorage.setItem("email",data.email);
+                localStorage.setItem("nombre",data.nombre);
+                localStorage.setItem("apellido",data.apellido);
+                if(data.rol == 1){
+                    modalContacto.usuarioRol = "Periodista";
+                    localStorage.setItem("rol","Periodista");
+                } else{
+                    modalContacto.usuarioRol = "Fan";
+                    localStorage.setItem("rol","Fan");
+                }
                 usuario.email = data.email;
                 usuario.rol = data.rol;
                 modalContacto.usuarioNombre = data.nombre;
                 modalContacto.usuarioApellido = data.apellido;
                 modalContacto.usuarioEmail = data.email;
-                if(data.rol == 1){
-                    modalContacto.usuarioRol = "Periodista";
-                } else{
-                    modalContacto.usuarioRol = "Fan";
-                }
-                modalContacto.usuarioPuntos = data.puntos;
                 
                 //cargar calificacion.html
                 var direccion = window.location.href.split("/");
@@ -185,6 +202,8 @@ $("#btn-registrar").on("click", function(){
 // ------------------------------- para pagina CALIFICACION -----------------------------------------
 // Funcion que se ejecuta al cargar la pagina Calificacion
 function onLoadCalificacion(){
+    alIniciar();
+
     // Solicitud AJAX con jQuery para obtener los partidos que se pueden calificar
     var direccion = "http://localhost:8080/rest/matches/";
     if(usuario.rol == 1){
@@ -366,6 +385,8 @@ $("#btn-promediar").on("click", function(){
 // ------------------------------- para pagina RESULTADOS -----------------------------------------
 //hacer una solicitud AJAX con jQuery para obtener los partidos terminados
 function onLoadResultados(){
+    alIniciar();
+
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
@@ -430,6 +451,8 @@ $("#btn-ver").on("click", function(){
 // ------------------------------- para pagina RANKING FANS -----------------------------------------
 //Con jQuery y AJAX hay que solicitar los json de los fans
 function onLoadRankingFans(){
+    alIniciar();
+
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
@@ -449,6 +472,8 @@ function onLoadRankingFans(){
 // ------------------------------- para pagina RANKING PERIODISTAS -----------------------------------------
 //Con jQuery y AJAX hay que solicitar los json de los periodistas
 function onLoadRankingPeriodistas(){
+    alIniciar();
+
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
