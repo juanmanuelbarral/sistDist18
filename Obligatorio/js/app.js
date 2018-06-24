@@ -137,23 +137,27 @@ $("#btn-ingresar").on("click", function(){
         method : "GET",
         url : direLogin,
         success : function (data) {
-            usuario.email = data.email;
-            usuario.rol = data.rol;
-            modalContacto.usuarioNombre = data.nombre;
-            modalContacto.usuarioApellido = data.apellido;
-            modalContacto.usuarioEmail = data.email;
-            if(data.rol == 1){
-                modalContacto.usuarioRol = "Periodista";
+            if(data){
+                usuario.email = data.email;
+                usuario.rol = data.rol;
+                modalContacto.usuarioNombre = data.nombre;
+                modalContacto.usuarioApellido = data.apellido;
+                modalContacto.usuarioEmail = data.email;
+                if(data.rol == 1){
+                    modalContacto.usuarioRol = "Periodista";
+                } else{
+                    modalContacto.usuarioRol = "Fan";
+                }
+                modalContacto.usuarioPuntos = data.puntos;
+                
+                //cargar calificacion.html
+                var direccion = window.location.href.split("/");
+                direccion[direccion.length-1] = "calificacion.html";
+                direccion = direccion.join("/");
+                window.location.href = direccion;
             } else{
-                modalContacto.usuarioRol = "Fan";
+                alert("Las credenciales ingresadas no son correctas");
             }
-            modalContacto.usuarioPuntos = data.puntos;
-            
-            //cargar calificacion.html
-            var direccion = window.location.href.split("/");
-            direccion[direccion.length-1] = "calificacion.html";
-            direccion = direccion.join("/");
-            window.location.href = direccion;
         },
         error : function() {
             alert("El loggeo no fue exitoso, revise los datos ingresados");
@@ -221,7 +225,7 @@ $("#btn-calificar").on("click", function(){
     var partido = appCalificacion.partido_selected;
     if(partido != ""){
         //Obtengo la info de los equipos
-        var direEquipos = "http://localhost:8080/rest/fotos/load/local?local=";
+        var direEquipos = "http://localhost:8080/rest/fotos/load/equipo?equipo=";
         var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
         var aux = "";
         var auxJugadores = [];
@@ -292,7 +296,6 @@ $("#btn-calificar").on("click", function(){
 // al servidor para que las haga persistentes en la base de datos
 // mostrar mensajes de si se pudo o no registrar dichas predicciones
 $("#btn-enviar-calificaciones").on("click", function(){
-    var calificados = todosCalificados(appCalificacion.jugadores_vue);
     var calificaciones = [];
     calificacion.idUsuario = usuario.email;
     calificacion.rolUsuario = usuario.rol;
