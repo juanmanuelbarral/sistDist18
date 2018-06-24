@@ -181,5 +181,7 @@ a:hover{
 }
 
 @media (max-width: 797px){
-    
+    #footer{
+        display: none;
+    }
 }

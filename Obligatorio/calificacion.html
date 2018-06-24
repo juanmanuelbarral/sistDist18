@@ -74,9 +74,9 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" v-for="equipo in equipos_vue">
                     <div class="contenido">
-                        <div class="info-equipo" v-for="equipo in equipos_vue">
+                        <div class="info-equipo">
                             <div class="row">
                                 <div class="col-md-3">
                                     <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">

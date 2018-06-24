@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body onload="onLoadResultados()">
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-default borde-inferior navbar-fixed-top" id="barra-navegacion">
@@ -65,7 +65,7 @@
                                     {{partido.local}} vs {{partido.visitante}} | {{partido.fecha}} {{partido.hora}}
                                 </option>
                             </select>
-                            <button type="button" class="btn btn-danger">Ver</button>
+                            <button type="button" class="btn btn-danger" id="btn-ver">Ver</button>
                         </div>
                     </div>
                 </div>

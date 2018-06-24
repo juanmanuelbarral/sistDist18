@@ -16,12 +16,12 @@ var app = new Vue({
                 calificacion:0,
             }
         ],
-        calificaciones_vue : [0,1,2,3,4,5],
+        calificaciones_vue : [],
 
     }
 });
 
-for (var i = 0; i <= 10; i++) {
+for (var i = 1; i <= 10; i++) {
     app.calificaciones_vue.push(i);
 }
 
