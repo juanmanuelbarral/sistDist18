@@ -268,7 +268,7 @@ $("#btn-ver").on("click", function(){
     if(partido != ""){
         //Obtengo la info de los equipos
         appResultados.equipos_vue.push(partido.local);
-        appResultados.equipos_vue.push(partido.visitante);
+        appResultados.equipos_vue.push(partido.visita);
         
         //Obtengo los jugadores de cada equipo
         var auxJugadores = [];
