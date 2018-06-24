@@ -20,15 +20,15 @@
 <body>
 
 	<div class="centrar-contenido">
-		<div class="contenido login">
+		<div class="contenido login" id="app-login">
 			<form>
 				<div class="form-group">
 					<label for="inputEmail" class="texto-azul">Email</label>
-					<input type="email" class="form-control" id="inputEmail" placeholder="Email">
+					<input type="email" class="form-control" id="inputEmail" placeholder="Email" v-model="email_selected">
 				</div>
 				<div class="form-group">
 					<label for="inputPassword" class="texto-azul">Contraseña</label>
-					<input type="password" class="form-control" id="inputPassword" placeholder="Contraseña">
+					<input type="password" class="form-control" id="inputPassword" placeholder="Contraseña" v-model="contra_selected">
 				</div>
 				<button type="button" class="btn btn-default" id="btn-ingresar">Ingresar</button>
 				<p>¿No estás registrado? > <a href="registrar.html">Regístrate</a></p>

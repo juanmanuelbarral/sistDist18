@@ -3,7 +3,7 @@
 // fan = 2
 
 var usuario = {
-    id : 0,
+    email : "",
     rol : 2,
 };
 
@@ -20,10 +20,33 @@ var calificacion = {
 var modalContacto = new Vue({
     el: "#modal-contacto",
     data: {
-        usuarioNombre : "",
-        usuarioRol : "",
         usuarioEmail : "",
-        usuarioPuntos : "",
+        usuarioRol : "",
+        usuarioNombre : "",
+        usuarioApellido : "",
+        usuarioPuntos : 0,
+    }
+});
+
+// Objeto para la pagina index (login)
+var appLogin = new Vue({
+    el: "#app-login",
+    data: {
+        email_selected: "",
+        contra_selected: "",
+    }
+});
+
+// Objeto para la pagina registrar
+var appRegistrar = new Vue({
+    el: "#app-registrar",
+    data: {
+        email_selected: "",
+        contra_selected: "",
+        contra2_selected: "",
+        nombre_selected: "",
+        apellido_selected: "",
+        rol_selected: "",
     }
 });
 
@@ -100,31 +123,42 @@ var appRankingPeriodistas = new Vue({
 // ------------------------------- para pagina INDEX -----------------------------------------
 // Funcion que se ejecuta al presionar el boton INGRESAR
 $("#btn-ingresar").on("click", function(){
-    var direccion = window.location.href.split("/");
-    direccion[direccion.length-1] = "calificacion.html";
-    direccion = direccion.join("/");
-    window.location.href = direccion;
+    // var direccion = window.location.href.split("/");
+    // direccion[direccion.length-1] = "calificacion.html";
+    // direccion = direccion.join("/");
+    // window.location.href = direccion;
+
     // GET con parametros los datos del usuario
-    // $.ajax({
-    //     method : "GET",
-    //     url : "http://hakkjhjk.edu.uy/api/brands", //--> GET para comprobar los datos del usuario pasando parametros
-    //     success : function (data) {
-    //         usuario.id = data.email;
-    //         usuario.rol = data.rol;
-    //         modalContacto.usuarioNombre = data.nombre;
-    //         modalContacto.usuarioEmail = data.email;
-    //         modalContacto.usuarioRol = data.rol;
-    //         modalContacto.usuarioPuntos = data.puntos;
-    //         //cargar calificacion.html
-    //         var direccion = window.location.href.split("/");
-    //         direccion[direccion.length-1] = "calificacion.html";
-    //         direccion = direccion.join("/");
-    //         window.location.href = direccion;
-    //     },
-    //     error : function() {
-    //         alert("El loggeo no fue exitoso, revise los datos ingresados");
-    //     }
-    // });
+    var auxEmail = appLogin.email_selected;
+    var auxContra = appLogin.contra_selected;
+    var direLogin = "http://localhost:8080/rest/users/login?email=" + auxEmail + "&contrasena=" + auxContra;
+
+    $.ajax({
+        method : "GET",
+        url : direLogin,
+        success : function (data) {
+            usuario.email = data.email;
+            usuario.rol = data.rol;
+            modalContacto.usuarioNombre = data.nombre;
+            modalContacto.usuarioApellido = data.apellido;
+            modalContacto.usuarioEmail = data.email;
+            if(data.rol == 1){
+                modalContacto.usuarioRol = "Periodista";
+            } else{
+                modalContacto.usuarioRol = "Fan";
+            }
+            modalContacto.usuarioPuntos = data.puntos;
+            
+            //cargar calificacion.html
+            var direccion = window.location.href.split("/");
+            direccion[direccion.length-1] = "calificacion.html";
+            direccion = direccion.join("/");
+            window.location.href = direccion;
+        },
+        error : function() {
+            alert("El loggeo no fue exitoso, revise los datos ingresados");
+        }
+    });
 });
 // ------------------------------- para pagina INDEX -----------------------------------------
 
@@ -133,7 +167,21 @@ $("#btn-ingresar").on("click", function(){
 // ------------------------------- para pagina REGISTRAR -----------------------------------------
 // Funcion que se ejecuta al presionar el boton REGISTRAR
 $("#btn-registrar").on("click", function(){
-    // FALTA HACER!!!
+    var auxEmail = appRegistrar.email_selected;
+    var auxContra = appRegistrar.contra_selected;
+    var auxContra2 = appRegistrar.contra2_selected;
+    var auxNombre = appRegistrar.nombre_selected;
+    var auxApellido = appRegistrar.apellido_selected;
+    var auxRol = appRegistrar.rol_selected;
+
+    if(auxContra == auxContra2){
+        // !!!!!!!!!!!!!!!!!!!!
+        // !!!HACER REGISTRO!!!
+        // !!!!!!!!!!!!!!!!!!!!
+    } else{
+        alert("Las contraseñas ingresadas no concuerdan!");
+    }
+
 });
 // ------------------------------- para pagina REGISTRAR -----------------------------------------
 
@@ -246,7 +294,7 @@ $("#btn-calificar").on("click", function(){
 $("#btn-enviar-calificaciones").on("click", function(){
     var calificados = todosCalificados(appCalificacion.jugadores_vue);
     var calificaciones = [];
-    calificacion.idUsuario = usuario.id;
+    calificacion.idUsuario = usuario.email;
     calificacion.rolUsuario = usuario.rol;
     calificacion.idPartido = appCalificacion.partido_selected.idPartido;
     
