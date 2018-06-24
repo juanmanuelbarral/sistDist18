@@ -209,25 +209,25 @@ $("#btn-calificar").on("click", function(){
             url : aux1,
             success : function (data) {
                 auxJugadores = auxJugadores.concat(data);
+                var aux2 = direJugadores + partido.visita.equipo;
+                $.ajax({
+                    method : "GET",
+                    url : aux2,
+                    success : function (data) {
+                        auxJugadores = auxJugadores.concat(data);
+                        appCalificacion.jugadores_vue = auxJugadores;
+                    },
+                    error : function() {
+                        alert("No se pudo obtener la info de la jugadores del equipo" + partido.visita.equipo + "!");
+                    }
+                });
             },
             error : function() {
                 alert("No se pudo obtener la info de la jugadores del equipo" + partido.local.equipo + "!");
             }
         });
 
-        var aux2 = direJugadores + partido.visita.equipo;
-        $.ajax({
-            method : "GET",
-            url : aux2,
-            success : function (data) {
-                auxJugadores = auxJugadores.concat(data);
-            },
-            error : function() {
-                alert("No se pudo obtener la info de la jugadores del equipo" + partido.visita.equipo + "!");
-            }
-        });
         
-        appCalificacion.jugadores_vue = auxJugadores;
     }
 });
 
