@@ -180,6 +180,14 @@ a:hover{
     margin-top: 10px;
 }
 
+.jugador{
+    height: 45px;
+}
+
+#footer{
+    display:none;
+}
+
 @media (max-width: 797px){
     #footer{
         display: none;
