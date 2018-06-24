@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="jugadores">
-                                <div class="jugador" v-for="jugador in jugadores_vue" v-if="equipo.idEquipo == jugador.equipo">
+                                <div class="jugador" v-for="jugador in jugadores_vue" v-if="equipo.equipo == jugador.equipo">
                                     <p class="nombre-listado">{{jugador.nombre}}</p>
                                     <select name="calificacion" class="form-control calificacion" v-model="jugador.calificacion">
                                         <option value="0" selected></option>
