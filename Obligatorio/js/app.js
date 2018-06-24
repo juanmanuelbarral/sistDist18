@@ -87,27 +87,31 @@ var appRankingPeriodistas = new Vue({
 // ------------------------------- para pagina INDEX -----------------------------------------
 // Funcion que se ejecuta al presionar el boton INGRESAR
 $("#btn-ingresar").on("click", function(){
+    var direccion = window.location.href.split("/");
+    direccion[direccion.length-1] = "calificacion.html";
+    direccion = direccion.join("/");
+    window.location.href = direccion;
     // GET con parametros los datos del usuario
-    $.ajax({
-        method : "GET",
-        url : "https://hakkjhjk.edu.uy/api/brands", //--> GET para comprobar los datos del usuario pasando parametros
-        success : function (data) {
-            usuario.id = data.email;
-            usuario.rol = data.rol;
-            modalContacto.usuarioNombre = data.nombre;
-            modalContacto.usuarioEmail = data.email;
-            modalContacto.usuarioRol = data.rol;
-            modalContacto.usuarioPuntos = data.puntos;
-            //cargar calificacion.html
-            var direccion = window.location.href.split("/");
-            direccion[direccion.length-1] = "calificacion.html";
-            direccion = direccion.join("/");
-            window.location.href = direccion;
-        },
-        error : function() {
-            alert("El loggeo no fue exitoso, revise los datos ingresados");
-        }
-    });
+    // $.ajax({
+    //     method : "GET",
+    //     url : "http://hakkjhjk.edu.uy/api/brands", //--> GET para comprobar los datos del usuario pasando parametros
+    //     success : function (data) {
+    //         usuario.id = data.email;
+    //         usuario.rol = data.rol;
+    //         modalContacto.usuarioNombre = data.nombre;
+    //         modalContacto.usuarioEmail = data.email;
+    //         modalContacto.usuarioRol = data.rol;
+    //         modalContacto.usuarioPuntos = data.puntos;
+    //         //cargar calificacion.html
+    //         var direccion = window.location.href.split("/");
+    //         direccion[direccion.length-1] = "calificacion.html";
+    //         direccion = direccion.join("/");
+    //         window.location.href = direccion;
+    //     },
+    //     error : function() {
+    //         alert("El loggeo no fue exitoso, revise los datos ingresados");
+    //     }
+    // });
 });
 // ------------------------------- para pagina INDEX -----------------------------------------
 
@@ -146,7 +150,7 @@ $("#btn-registrar").on("click", function(){
 // Funcion que se ejecuta al cargar la pagina Calificacion
 function onLoadCalificacion(){
     // Solicitud AJAX con jQuery para obtener los partidos que se pueden calificar
-    var direccion = "localhost:8080/rest/matches/";
+    var direccion = "http://localhost:8080/rest/matches/";
     if(usuario.rol == 1){
         direccion += "allGamesPeriodista";
     } else{
@@ -181,7 +185,7 @@ $("#btn-calificar").on("click", function(){
         appCalificacion.equipos_vue.push(partido.visita);
         
         //Obtengo los jugadores de cada equipo
-        var direJugadores = "localhost:8080/rest/players/allPlayers/id?id=";
+        var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
         var auxJugadores = [];
 
         for(var i=0; i<2; i++){
