@@ -189,9 +189,10 @@ $("#btn-calificar").on("click", function(){
         var auxJugadores = [];
 
         for(var i=0; i<2; i++){
+            direJugadores += appCalificacion.equipos_vue[i].equipo;
             $.ajax({
                 method : "GET",
-                url : direJugadores + appCalificacion.equipos_vue[i].equipo,
+                url : direJugadores,
                 success : function (data) {
                     auxJugadores = auxJugadores.concat(data);
                 },
