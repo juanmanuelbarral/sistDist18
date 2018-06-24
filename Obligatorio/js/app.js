@@ -283,40 +283,75 @@ $("#btn-calificar").on("click", function(){
 });
 
 
-// verifica se haya votado a todos los jugadores de los equipos, y envia las predicciones
-// al servidor para que las haga persistentes en la base de datos
-// mostrar mensajes de si se pudo o no registrar dichas predicciones
+
+// Boton para enviar las calificaciones al servidor
 $("#btn-enviar-calificaciones").on("click", function(){
-    var id_partido = appCalificacion.partido_selected.id;
+    var idUsuario = usuario.email;
+    var idPartido = appCalificacion.partido_selected.id;
+    var listaJugadores = appCalificacion.jugadores_vue;
+    var len = listaJugadores.length;
     
-    appCalificacion.jugadores_vue.array.forEach(function(jugador){
-        
+    enviarCalificacionesRecursiva(idUsuario, idPartido, listaJugadores, len-1);
+});
+
+function enviarCalificacionesRecursiva(idUsuario,idPartido, listaJugadores, indice){
+    console.log("entrada recursiva: " + indice);
+    if(indice < 0){
+        console.log("se registraron calificaciones");
+        return;
+    } else{
+        var jugador = listaJugadores[indice];
         if(jugador.calificacion != 0){
             $.ajax({
                 method : "POST",
-                url : "http://localhost:8080/rest/players/calificar?idUsuario=" + usuario.email + "&id_partido=" + id_partido + "&jugador_camiseta=" + jugador.camiseta + "&id_equipo=" + jugador.equipo + "&puntaje=" + jugador.calificacion,
+                url : "http://localhost:8080/rest/players/calificar?idUsuario=" + idUsuario + "&idPartido=" + idPartido + "&jugador_camiseta=" + jugador.camiseta + "&id_equipo=" + jugador.equipo + "&puntaje=" + jugador.calificacion,
                 success : function (data) {
-                    console.log("se enviaron calificaciones");
+                    enviarCalificacionesRecursiva(idUsuario, idPartido, listaJugadores, indice-1);
                 },
                 error : function() {
-                    console.log("error en envio de calificaciones");
+                    console.log("error en envio de calificacion: " + indice);
+                    // ver si volver a intentar mandar. Peligro de loop.
                 }
             });
+        } else{
+            console.log("calificacion de 0 encontrada");
         }
-    });
-});
+    }
+}
+
+// Boton para enviar las calificaciones al servidor
+// OPCION 2
+// $("#btn-enviar-calificaciones").on("click", function(){
+//     var idPartido = appCalificacion.partido_selected.id;
+    
+//     appCalificacion.jugadores_vue.array.forEach(function(jugador){
+        
+//         if(jugador.calificacion != 0){
+//             $.ajax({
+//                 method : "POST",
+//                 url : "http://localhost:8080/rest/players/calificar?idUsuario=" + usuario.email + "&idPartido=" + idPartido + "&jugador_camiseta=" + jugador.camiseta + "&id_equipo=" + jugador.equipo + "&puntaje=" + jugador.calificacion,
+//                 success : function (data) {
+//                     console.log("se enviaron calificaciones");
+//                 },
+//                 error : function() {
+//                     console.log("error en envio de calificaciones");
+//                 }
+//             });
+//         }
+//     });
+// });
 
 
 
 // Botón para simular el evento promediar un partido con sus correspondientes calificaciones
 $("#btn-promediar").on("click", function(){
-    var id_partido = appCalificacion.partido_selected.id;
+    var idPartido = appCalificacion.partido_selected.id;
 
     $.ajax({
         method : "POST",
-        url : "http://localhost:8080/rest/", //COMPLETAR URL!!!
+        url : "http://localhost:8080/rest/jugadoresCalificados/actualizarPromedio?partido=" + idPartido,
         success : function (data) {
-            console.log("Se envio la orden de promediar las calificaciones para los jugadores del partido " + id_partido);
+            console.log("Se envio la orden de promediar las calificaciones para los jugadores del partido: " + idPartido);
         },
         error : function() {
             console.log("Error al enviar la orden de promediar");
