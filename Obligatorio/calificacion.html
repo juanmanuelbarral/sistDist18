@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="jugadores">
-                                <div class="jugador" v-for="jugador in jugadores_vue" v-if="equipo.equipo == jugador.equipo">
+                                <div class="jugador" v-for="jugador in jugadores_vue" v-if="(equipo.equipo == jugador.equipo) && (jugador.camiseta != '')">
                                     <p class="nombre-listado">{{jugador.nombre}}</p>
                                     <select name="calificacion" class="form-control calificacion" v-model="jugador.calificacion">
                                         <option value="0" selected></option>
@@ -114,20 +114,7 @@
 	<div id="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <ul>
-                        <li><a href="calificacion.html">Calificar</a></li>
-                        <li><a href="resultados.html">Resultados</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul>
-                        <li><a href="ranking-fans.html">Ranking de fans</a></li>
-                        <li><a href="ranking-periodistas.html">Ranking de periodistas</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <li><a href="#" data-toggle="modal" data-target="#modal-contacto">Contacto</a></li>
+                <div class="col-md-12">
                     <p>Copyright © FutSD 2018</p>
                 </div>
             </div>

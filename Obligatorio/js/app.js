@@ -33,16 +33,14 @@ var appCalificacion = new Vue({
     data: {
         // DATOS DEL VUE
         partidos_vue : [],
-        // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDPARTIDO
+        // Objetos partido:{local <objeto equipo>, visita <objeto equipo>, date, idParido}
         equipos_vue : [],
-        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), EQUIPO
+        // Objetos equipo:{equipo <id del equipo>, nombre, urlFoto}
         jugadores_vue : [],
-        // JUGADORES (una lista de los jugadores de los equipos seleccionados)
-        // a su vez, lo jugadores tienen que tener un atributo EQUIPO, IDJUGADOR y NOMBRE, CALIFICACION
+        // Objetos jugadores:{equipo <id del equipo pertenecen>, camiseta, nombre, calificacion <=0>}
         calificaciones_vue : [],
-        // crear la lista de calificaciones
         partido_selected : "",
-
+        
     }
 });
 
@@ -52,12 +50,11 @@ var appResultados = new Vue({
     data: {
         // DATOS DEL VUE
         partidosTerminados_vue : [],
-        // Los objetos partido van a tener (al menos) los atributos LOCAL, VISITANTE, FECHA, HORA, IDPARTIDO
+        // Objetos partido:{local <objeto equipo>, visita <objeto equipo>, date, idParido}
         equipos_vue : [],
-        // Los objetos equipo van a tener (al menos) los atributos NOMBRE (del pais), IMAGE (para la ruta a la bandera), EQUIPO
+        // Objetos equipo:{equipo <id del equipo>, nombre, urlFoto}
         jugadoresEvaluados_vue : [],
-        // JUGADORES (una lista de los jugadores evaluados de los equipos seleccionados)
-        // a su vez, lo jugadores tienen que tener un atributo EQUIPO, IDJUGADOR, NOMBRE y CALIFICACION
+        // Objetos jugadores:{equipo <id del equipo pertenecen>, camiseta, nombre, calificacion <=0>}
         partido_selected : "",
     }
 });
@@ -68,7 +65,7 @@ var appRankingFans = new Vue({
     data: {
         // DATOS DEL VUE
         fans_vue : [],
-        //Objetos fan que por lo menos tienen los atributos NOMBRE y PUNTAJE
+        //Objetos fan: {nombre, puntaje}
     }
 });
 
@@ -78,7 +75,7 @@ var appRankingPeriodistas = new Vue({
     data: {
         // DATOS DEL VUE
         periodistas_vue : [],
-        //Objetos periodista que por lo menos tienen los atributos NOMBRE y PUNTAJE
+        //Objetos periodista: {nombre, puntaje}
     }
 });
 
@@ -120,27 +117,7 @@ $("#btn-ingresar").on("click", function(){
 // ------------------------------- para pagina REGISTRAR -----------------------------------------
 // Funcion que se ejecuta al presionar el boton REGISTRAR
 $("#btn-registrar").on("click", function(){
-    // GET con parametros los datos del usuario
-    // $.ajax({
-    //     method : "GET",
-    //     url : "https://hakkjhjk.edu.uy/api/brands", //--> GET para comprobar los datos del usuario pasando parametros
-    //     success : function (data) {
-    //         usuario.id = data.email;
-    //         usuario.rol = data.rol;
-    //         modalContacto.usuarioNombre = data.nombre;
-    //         modalContacto.usuarioEmail = data.email;
-    //         modalContacto.usuarioRol = data.rol;
-    //         modalContacto.usuarioPuntos = data.puntos;
-    //         //cargar calificacion.html
-    //         var direccion = window.location.href.split("/");
-    //         direccion[direccion.length-1] = "calificacion.html";
-    //         direccion = direccion.join("/");
-    //         window.location.href = direccion;
-    //     },
-    //     error : function() {
-    //         alert("El loggeo no fue exitoso, revise los datos ingresados");
-    //     }
-    // });
+    // FALTA HACER!!!
 });
 // ------------------------------- para pagina REGISTRAR -----------------------------------------
 
@@ -187,21 +164,6 @@ $("#btn-calificar").on("click", function(){
         //Obtengo los jugadores de cada equipo
         var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
         var auxJugadores = [];
-        // var aux;
-
-        // for(var i=0; i<2; i++){
-        //     aux = direJugadores + appCalificacion.equipos_vue[i].equipo;
-        //     $.ajax({
-        //         method : "GET",
-        //         url : aux,
-        //         success : function (data) {
-        //             auxJugadores = auxJugadores.concat(data);
-        //         },
-        //         error : function() {
-        //             alert("No se pudo obtener la info de la jugadores del equipo" + appCalificacion.equipos_vue[i].equipo + "!");
-        //         }
-        //     });
-        // }
 
         var aux1 = direJugadores + partido.local.equipo;
         $.ajax({
@@ -215,6 +177,7 @@ $("#btn-calificar").on("click", function(){
                     url : aux2,
                     success : function (data) {
                         auxJugadores = auxJugadores.concat(data);
+
                         appCalificacion.jugadores_vue = auxJugadores;
                     },
                     error : function() {
@@ -301,32 +264,38 @@ $("#btn-ver").on("click", function(){
         appResultados.equipos_vue.push(partido.visita);
         
         //Obtengo los jugadores de cada equipo
+        var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
         var auxJugadores = [];
+
         //Jugadores del local
+        var aux1 = direJugadores + partido.local.equipo;
         $.ajax({
             method : "GET",
-            // url : "https://ha.edu.uy/api/brands", --> LINK PARA JUGADORES LOCALES
+            url : aux1,
             success : function (data) {
                 auxJugadores = auxJugadores.concat(data);
+                
+                //Jugadores del visitante
+                var aux2 = direJugadores + partido.visita.equipo;
+                $.ajax({
+                    method : "GET",
+                    url : aux2,
+                    success : function (data) {
+                        auxJugadores = auxJugadores.concat(data);
+                        
+                        appResultados.jugadoresEvaluados_vue = auxJugadores;
+                    },
+                    error : function() {
+                        alert("No se pudo obtener la info de la jugadores visitantes!");
+                    }
+                });
             },
             error : function() {
                 alert("No se pudo obtener la info de la jugadores locales!");
             }
         });
         
-        //Jugadores del visitante
-        $.ajax({
-            method : "GET",
-            // url : "https://ha.edu.uy/api/brands", --> LINK PARA JUGADORES VISITANTES
-            success : function (data) {
-                auxJugadores = auxJugadores.concat(data);
-            },
-            error : function() {
-                alert("No se pudo obtener la info de la jugadores locales!");
-            }
-        });
         
-        appResultados.jugadoresEvaluados_vue = auxJugadores;
     }
 });
 // ------------------------------- para pagina RESULTADOS -----------------------------------------
@@ -368,14 +337,3 @@ function onLoadRankingPeriodistas(){
     });
 };
 // ------------------------------- para pagina RANKING PERIODISTAS -----------------------------------------
-
-// ------------------------------- FUNCIONES AUXILIARES -----------------------------------------
-function todosCalificados(lista){
-    var len = lista.length;
-    for(var i=0; i<len; i++){
-        if(lista[i].calificacion == 0){
-            return false;
-        }
-    }
-    return true;
-}

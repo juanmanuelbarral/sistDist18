@@ -62,7 +62,7 @@
                             <select name="partido" id="partido-filtro" class="form-control" v-model="partido_selected">
                                 <option value="" selected></option>
                                 <option v-for="partido in partidosTerminados_vue" v-bind:value="partido">
-                                    {{partido.local}} vs {{partido.visitante}} | {{partido.fecha}} {{partido.hora}}
+                                    {{partido.local.nombre}} vs {{partido.visita.nombre}} | {{partido.date}}
                                 </option>
                             </select>
                             <button type="button" class="btn btn-danger" id="btn-ver">Ver</button>
@@ -74,19 +74,19 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" v-for="equipo in equipos_vue">
                     <div class="contenido">
-                        <div class="info-equipo" v-for="equipo in equipos_vue">
+                        <div class="info-equipo">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img v-bind:src="equipo.image" alt="" class="img-thumbnail bandera">
+                                    <img v-bind:src="equipo.urlFoto" alt="" class="img-thumbnail bandera">
                                 </div>
                                 <div class="col-md-9">
                                     <p class="nombre-pais">{{equipo.nombre}}</p>
                                 </div>
                             </div>
                             <div class="jugadores">
-                                <div class="jugador" v-for="jugador in jugadoresEvaluados_vue" v-if="equipo.equipo == jugador.equipo">
+                                <div class="jugador" v-for="jugador in jugadoresEvaluados_vue" v-if="(equipo.equipo == jugador.equipo) && (jugador.camiseta != '')">
                                     <p class="nombre-listado">{{jugador.nombre}}</p>
                                     <div class="calificacion caja">{{jugador.calificacion}}</div>
                                 </div>
@@ -102,20 +102,7 @@
 	<div id="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <ul>
-                        <li><a href="calificacion.html">Calificar</a></li>
-                        <li><a href="resultados.html">Resultados</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul>
-                        <li><a href="ranking-fans.html">Ranking de fans</a></li>
-                        <li><a href="ranking-periodistas.html">Ranking de periodistas</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <li><a href="#" data-toggle="modal" data-target="#modal-contacto">Contacto</a></li>
+                <div class="col-md-12">
                     <p>Copyright © FutSD 2018</p>
                 </div>
             </div>
