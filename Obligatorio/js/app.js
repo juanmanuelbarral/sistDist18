@@ -314,6 +314,7 @@ function enviarCalificacionesRecursiva(idUsuario,idPartido, listaJugadores, indi
                 }
             });
         } else{
+            enviarCalificacionesRecursiva(idUsuario, idPartido, listaJugadores, indice-1);
             console.log("calificacion de 0 encontrada");
         }
     }
