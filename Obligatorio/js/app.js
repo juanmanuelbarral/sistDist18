@@ -137,7 +137,7 @@ $("#btn-ingresar").on("click", function(){
         method : "GET",
         url : direLogin,
         success : function (data) {
-            if(data){
+            if(data != ""){
                 usuario.email = data.email;
                 usuario.rol = data.rol;
                 modalContacto.usuarioNombre = data.nombre;
