@@ -287,7 +287,7 @@ $("#btn-calificar").on("click", function(){
 // al servidor para que las haga persistentes en la base de datos
 // mostrar mensajes de si se pudo o no registrar dichas predicciones
 $("#btn-enviar-calificaciones").on("click", function(){
-    var id_partido = partido_selected.id;
+    var id_partido = appCalificacion.partido_selected.id;
     
     appCalificacion.jugadores_vue.array.forEach(function(jugador){
         
@@ -295,7 +295,6 @@ $("#btn-enviar-calificaciones").on("click", function(){
             $.ajax({
                 method : "POST",
                 url : "http://localhost:8080/rest/players/calificar?idUsuario=" + usuario.email + "&id_partido=" + id_partido + "&jugador_camiseta=" + jugador.camiseta + "&id_equipo=" + jugador.equipo + "&puntaje=" + jugador.calificacion,
-                data : JSON.stringify(calificaciones),
                 success : function (data) {
                     console.log("se enviaron calificaciones");
                 },
@@ -305,6 +304,24 @@ $("#btn-enviar-calificaciones").on("click", function(){
             });
         }
     });
+});
+
+
+
+// Botón para simular el evento promediar un partido con sus correspondientes calificaciones
+$("#btn-promediar").on("click", function(){
+    var id_partido = appCalificacion.partido_selected.id;
+
+    $.ajax({
+        method : "POST",
+        url : "http://localhost:8080/rest/", //COMPLETAR URL!!!
+        success : function (data) {
+            console.log("Se envio la orden de promediar las calificaciones para los jugadores del partido " + id_partido);
+        },
+        error : function() {
+            console.log("Error al enviar la orden de promediar");
+        }
+    });    
 });
 // ------------------------------- para pagina CALIFICACION -----------------------------------------
 
