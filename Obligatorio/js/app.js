@@ -3,8 +3,8 @@
 // fan = 2
 
 var usuario = {
-    email : "",
-    rol : 2,
+    email,
+    rol,
 };
 
 // Objeto Vue para el modal
