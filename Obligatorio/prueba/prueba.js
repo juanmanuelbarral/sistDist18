@@ -5,15 +5,15 @@ var app = new Vue({
         personas:[
             {
                 nombre:"Pedro",
-                calificacion:34,
+                calificacion:0,
             },
             {
                 nombre:"Juan",
-                calificacion:1,
+                calificacion:0,
             },
             {
                 nombre:"Lucia",
-                calificacion:67,
+                calificacion:0,
             }
         ],
         calificaciones_vue : [0,1,2,3,4,5],
@@ -32,4 +32,26 @@ function funcionPrueba(){
         texto += persona.calificacion;
     });
     console.log(texto);
+}
+
+var lis = app.personas;
+
+function comprobacion(lista){
+    var len = lista.length;
+    for(var i=0; i<len; i++){
+        console.log(lista[i].calificacion);
+        if(lista[i].calificacion == 0){
+            console.log("entro al if");
+            return false;
+            console.log("paso por arriba del return");
+        }
+
+    }
+    return true;
+}
+
+var jsonson = JSON.stringify(app.personas[0]);
+
+function hola(){
+    alert("hola");
 }
