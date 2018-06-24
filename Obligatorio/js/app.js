@@ -187,12 +187,13 @@ $("#btn-calificar").on("click", function(){
         //Obtengo los jugadores de cada equipo
         var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
         var auxJugadores = [];
+        var aux;
 
         for(var i=0; i<2; i++){
-            direJugadores += appCalificacion.equipos_vue[i].equipo;
+            aux = direJugadores + appCalificacion.equipos_vue[i].equipo;
             $.ajax({
                 method : "GET",
-                url : direJugadores,
+                url : aux,
                 success : function (data) {
                     auxJugadores = auxJugadores.concat(data);
                 },
