@@ -59,7 +59,7 @@
                     <div class="col-md-12">
                         <h2 class="texto-azul">Ranking de periodistas</h2>
                         <div class="listado-periodistas">
-                            <div class="periodista" v-for="periodista in periodistas_vue">
+                            <div class="periodista" v-for="periodista in sortPuntaje(periodistas_vue)">
                                 <p class="nombre-listado">{{periodista.nombre}}</p>
                                 <div class="calificacion caja">{{periodista.puntaje}}</div>
                             </div>

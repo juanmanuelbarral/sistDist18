@@ -96,6 +96,14 @@ var appRankingFans = new Vue({
         // DATOS DEL VUE
         fans_vue : [],
         //Objetos fan: {nombre, puntaje}
+    },
+    methods: {
+        sortPuntaje: function(fans) {
+          // Set slice() to avoid to generate an infinite loop!
+          return fans.slice().sort(function(a, b) {
+            return b.puntaje - a.puntaje;
+          });
+        }
     }
 });
 
@@ -106,6 +114,14 @@ var appRankingPeriodistas = new Vue({
         // DATOS DEL VUE
         periodistas_vue : [],
         //Objetos periodista: {nombre, puntaje}
+    },
+    methods: {
+        sortPuntaje: function(periodistas) {
+          // Set slice() to avoid to generate an infinite loop!
+          return periodistas.slice().sort(function(a, b) {
+            return b.puntaje - a.puntaje;
+          });
+        }
     }
 });
 
