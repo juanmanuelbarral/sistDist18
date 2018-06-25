@@ -17,6 +17,7 @@ body{
 
 #barra-navegacion a{
     color: white;
+    padding: 12px;
 }
 
 #barra-navegacion .marca{

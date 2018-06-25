@@ -125,6 +125,7 @@ var appRankingPeriodistas = new Vue({
     }
 });
 
+// Funcion que se ejecuta al abrir una pagina
 function alIniciar(){
     usuario.email = localStorage.getItem("email");
     modalContacto.usuarioEmail = localStorage.getItem("email");
@@ -141,14 +142,27 @@ function alIniciar(){
 
 
 
+// Funcion que se ejecuta al presionar el boton LOG OUT en el modal de contacto
+$("#btn-logOut").on("click", function(){
+    // Borrar los datos del localStorage
+    localStorage.setItem("email","");
+    localStorage.setItem("nombre","");
+    localStorage.setItem("apellido","");
+    localStorage.setItem("puntaje","");
+    localStorage.setItem("rol","");
+    
+    // Cargar index.html
+    var direccion = window.location.href.split("/");
+    direccion[direccion.length-1] = "index.html";
+    direccion = direccion.join("/");
+    window.location.href = direccion;
+});
+
+
+
 // ------------------------------- para pagina INDEX -----------------------------------------
 // Funcion que se ejecuta al presionar el boton INGRESAR
 $("#btn-ingresar").on("click", function(){
-    // var direccion = window.location.href.split("/");
-    // direccion[direccion.length-1] = "calificacion.html";
-    // direccion = direccion.join("/");
-    // window.location.href = direccion;
-
     // GET con parametros los datos del usuario
     var auxEmail = appLogin.email_selected;
     var auxContra = appLogin.contra_selected;
