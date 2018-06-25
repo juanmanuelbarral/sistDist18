@@ -136,6 +136,7 @@ function alIniciar(){
     }
     modalContacto.usuarioNombre = localStorage.getItem("nombre");
     modalContacto.usuarioApellido = localStorage.getItem("apellido");
+    modalContacto.usuarioPuntos = localStorage.getItem("puntaje");
 }
 
 
@@ -161,6 +162,8 @@ $("#btn-ingresar").on("click", function(){
                 localStorage.setItem("email",data.email);
                 localStorage.setItem("nombre",data.nombre);
                 localStorage.setItem("apellido",data.apellido);
+                var auxPuntaje = "" + data.puntaje;
+                localStorage.setItem("puntaje", auxPuntaje);
                 if(data.rol == 1){
                     modalContacto.usuarioRol = "Periodista";
                     localStorage.setItem("rol","Periodista");
@@ -173,6 +176,7 @@ $("#btn-ingresar").on("click", function(){
                 modalContacto.usuarioNombre = data.nombre;
                 modalContacto.usuarioApellido = data.apellido;
                 modalContacto.usuarioEmail = data.email;
+                modalContacto.usuarioPuntos = data.puntaje;
                 
                 //cargar calificacion.html
                 var direccion = window.location.href.split("/");
@@ -202,10 +206,46 @@ $("#btn-registrar").on("click", function(){
     var auxApellido = appRegistrar.apellido_selected;
     var auxRol = appRegistrar.rol_selected;
 
+    var direccion = "http://localhost:8080/rest/users/registro?email=" + auxEmail + "&nombre=" + auxNombre + "&apellido=" + auxApellido + "&contrasena=" + auxContra + "&rol=" + auxRol + "&pais=x";
+
     if(auxContra == auxContra2){
-        // !!!!!!!!!!!!!!!!!!!!
-        // !!!HACER REGISTRO!!!
-        // !!!!!!!!!!!!!!!!!!!!
+        $.ajax({
+            method : "POST",
+            url : direccion,
+            success : function (data) {
+                if(data != ""){
+                    localStorage.setItem("email",data.email);
+                    localStorage.setItem("nombre",data.nombre);
+                    localStorage.setItem("apellido",data.apellido);
+                    var auxPuntaje = "" + data.puntaje;
+                    localStorage.setItem("puntaje", auxPuntaje);
+                    if(data.rol == 1){
+                        modalContacto.usuarioRol = "Periodista";
+                        localStorage.setItem("rol","Periodista");
+                    } else{
+                        modalContacto.usuarioRol = "Fan";
+                        localStorage.setItem("rol","Fan");
+                    }
+                    usuario.email = data.email;
+                    usuario.rol = data.rol;
+                    modalContacto.usuarioNombre = data.nombre;
+                    modalContacto.usuarioApellido = data.apellido;
+                    modalContacto.usuarioEmail = data.email;
+                    modalContacto.usuarioPuntos = data.puntaje;
+                    
+                    //cargar calificacion.html
+                    var direccion = window.location.href.split("/");
+                    direccion[direccion.length-1] = "calificacion.html";
+                    direccion = direccion.join("/");
+                    window.location.href = direccion;
+                } else{
+                    alert("Las credenciales ingresadas no son correctas");
+                }
+            },
+            error : function() {
+                alert("El loggeo no fue exitoso, revise los datos ingresados");
+            }
+        });
     } else{
         alert("Las contraseñas ingresadas no concuerdan!");
     }
