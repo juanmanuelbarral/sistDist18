@@ -184,6 +184,14 @@ a:hover{
     height: 45px;
 }
 
+.periodista{
+    height: 45px;
+}
+
+.fan{
+    height: 45px;
+}
+
 @media (max-width: 797px){
     #footer{
         display: none;

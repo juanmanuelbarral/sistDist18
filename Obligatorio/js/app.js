@@ -497,7 +497,7 @@ function onLoadRankingFans(){
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
-        url : "https://localhost:8080/rest/users/allAficionados",
+        url : "http://localhost:8080/rest/users/allAficionados",
         success : function (data) {
             appRankingFans.fans_vue = data;
         },
@@ -518,7 +518,7 @@ function onLoadRankingPeriodistas(){
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
-        url : "https://localhost:8080/rest/users/allPeriodistas",
+        url : "http://localhost:8080/rest/users/allPeriodistas",
         success : function (data) {
             appRankingPeriodistas.periodistas_vue = data;
         },
