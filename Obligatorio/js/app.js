@@ -395,28 +395,6 @@ function enviarCalificacionesRecursiva(idUsuario,idPartido, listaJugadores, indi
     }
 }
 
-// Boton para enviar las calificaciones al servidor
-// OPCION 2
-// $("#btn-enviar-calificaciones").on("click", function(){
-//     var idPartido = appCalificacion.partido_selected.id;
-    
-//     appCalificacion.jugadores_vue.array.forEach(function(jugador){
-        
-//         if(jugador.calificacion != 0){
-//             $.ajax({
-//                 method : "POST",
-//                 url : "http://localhost:8080/rest/players/calificar?idUsuario=" + usuario.email + "&idPartido=" + idPartido + "&jugador_camiseta=" + jugador.camiseta + "&id_equipo=" + jugador.equipo + "&puntaje=" + jugador.calificacion,
-//                 success : function (data) {
-//                     console.log("se enviaron calificaciones");
-//                 },
-//                 error : function() {
-//                     console.log("error en envio de calificaciones");
-//                 }
-//             });
-//         }
-//     });
-// });
-
 
 
 // Botón para simular el evento promediar un partido con sus correspondientes calificaciones
@@ -444,16 +422,16 @@ function onLoadResultados(){
     alIniciar();
 
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
-    $.ajax({
-        method : "GET",
-        url : "https://ha.edu.uy/api/brands", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
-        success : function (data) {
-            appResultados.partidosTerminados_vue = data;
-        },
-        error : function() {
-            alert("No se pudo obtener la info de la API partidos!");
-        }
-    });
+    // $.ajax({
+    //     method : "GET",
+    //     url : "https://", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
+    //     success : function (data) {
+    //         appResultados.partidosTerminados_vue = data;
+    //     },
+    //     error : function() {
+    //         alert("No se pudo obtener la info de la API partidos!");
+    //     }
+    // });
 };
 
 
@@ -512,7 +490,7 @@ function onLoadRankingFans(){
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
-        url : "https://ha.edu.uy/api/brands", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
+        url : "https://", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
         success : function (data) {
             appRankingFans.fans_vue = data;
         },
@@ -533,7 +511,7 @@ function onLoadRankingPeriodistas(){
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
-        url : "https://ha.edu.uy/api/brands", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
+        url : "https://", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
         success : function (data) {
             appRankingPeriodistas.periodistas_vue = data;
         },
