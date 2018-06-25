@@ -457,48 +457,46 @@ function onLoadResultados(){
 
 
 // Funcion para el boton VER que obtiene los equipos involucrados en el partido terminado
-$("#btn-ver").on("click", function(){
-    var partido = appResultados.partido_selected;
-    if(partido != ""){
-        //Obtengo la info de los equipos
-        appResultados.equipos_vue.push(partido.local);
-        appResultados.equipos_vue.push(partido.visita);
+// $("#btn-ver").on("click", function(){
+//     var partido = appResultados.partido_selected;
+//     if(partido != ""){
+//         //Obtengo la info de los equipos
+//         appResultados.equipos_vue.push(partido.local);
+//         appResultados.equipos_vue.push(partido.visita);
         
-        //Obtengo los jugadores de cada equipo
-        var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
-        var auxJugadores = [];
+//         //Obtengo los jugadores de cada equipo
+//         var direJugadores = "http://localhost:8080/rest/players/allPlayers/id?id=";
+//         var auxJugadores = [];
 
-        //Jugadores del local
-        var aux1 = direJugadores + partido.local.equipo;
-        $.ajax({
-            method : "GET",
-            url : aux1,
-            success : function (data) {
-                auxJugadores = auxJugadores.concat(data);
+//         //Jugadores del local
+//         var aux1 = direJugadores + partido.local.equipo;
+//         $.ajax({
+//             method : "GET",
+//             url : aux1,
+//             success : function (data) {
+//                 auxJugadores = auxJugadores.concat(data);
                 
-                //Jugadores del visitante
-                var aux2 = direJugadores + partido.visita.equipo;
-                $.ajax({
-                    method : "GET",
-                    url : aux2,
-                    success : function (data) {
-                        auxJugadores = auxJugadores.concat(data);
+//                 //Jugadores del visitante
+//                 var aux2 = direJugadores + partido.visita.equipo;
+//                 $.ajax({
+//                     method : "GET",
+//                     url : aux2,
+//                     success : function (data) {
+//                         auxJugadores = auxJugadores.concat(data);
                         
-                        appResultados.jugadoresEvaluados_vue = auxJugadores;
-                    },
-                    error : function() {
-                        alert("No se pudo obtener la info de la jugadores visitantes!");
-                    }
-                });
-            },
-            error : function() {
-                alert("No se pudo obtener la info de la jugadores locales!");
-            }
-        });
-        
-        
-    }
-});
+//                         appResultados.jugadoresEvaluados_vue = auxJugadores;
+//                     },
+//                     error : function() {
+//                         alert("No se pudo obtener la info de la jugadores visitantes!");
+//                     }
+//                 });
+//             },
+//             error : function() {
+//                 alert("No se pudo obtener la info de la jugadores locales!");
+//             }
+//         });
+//     }
+// });
 // ------------------------------- para pagina RESULTADOS -----------------------------------------
 
 
