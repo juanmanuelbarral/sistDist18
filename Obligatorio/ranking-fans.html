@@ -60,7 +60,7 @@
                         <h2 class="texto-azul">Ranking de fans</h2>
                         <div class="listado-fans">
                             <div class="fan" v-for="fan in sortPuntaje(fans_vue)">
-                                <p class="nombre-listado">{{fan.nombre}}</p>
+                                <p class="nombre-listado">{{fan.nombre}} {{fan.apellido}}</p>
                                 <div class="calificacion caja">{{fan.puntaje}}</div>
                             </div>
                         </div>

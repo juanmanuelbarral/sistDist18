@@ -95,7 +95,7 @@ var appRankingFans = new Vue({
     data: {
         // DATOS DEL VUE
         fans_vue : [],
-        //Objetos fan: {nombre, puntaje}
+        //Objetos fan: {nombre, apellido, puntaje}
     },
     methods: {
         sortPuntaje: function(fans) {
@@ -113,7 +113,7 @@ var appRankingPeriodistas = new Vue({
     data: {
         // DATOS DEL VUE
         periodistas_vue : [],
-        //Objetos periodista: {nombre, puntaje}
+        //Objetos periodista: {nombre, apellido, puntaje}
     },
     methods: {
         sortPuntaje: function(periodistas) {
@@ -260,6 +260,11 @@ $("#btn-registrar").on("click", function(){
 function onLoadCalificacion(){
     alIniciar();
 
+    if(usuario.rol == 2){
+        // es un fan, no puede simular el fin del periodo de votacion
+        $("#simular-promediar").hide();
+    }
+
     // Solicitud AJAX con jQuery para obtener los partidos que se pueden calificar
     var direccion = "http://localhost:8080/rest/matches/";
     if(usuario.rol == 1){
@@ -366,13 +371,14 @@ $("#btn-enviar-calificaciones").on("click", function(){
     var listaJugadores = appCalificacion.jugadores_vue;
     var len = listaJugadores.length;
     
+    alert("Sus calificaciones se estan enviando");
     enviarCalificacionesRecursiva(idUsuario, idPartido, listaJugadores, len-1);
 });
 
 function enviarCalificacionesRecursiva(idUsuario,idPartido, listaJugadores, indice){
     console.log("entrada recursiva: " + indice);
     if(indice < 0){
-        console.log("se registraron calificaciones");
+        alert("Exito, se registraron sus calificaciones!");
         return;
     } else{
         var jugador = listaJugadores[indice];
@@ -385,7 +391,7 @@ function enviarCalificacionesRecursiva(idUsuario,idPartido, listaJugadores, indi
                 },
                 error : function() {
                     console.log("error en envio de calificacion: " + indice);
-                    // ver si volver a intentar mandar. Peligro de loop.
+                    enviarCalificacionesRecursiva(idUsuario, idPartido, listaJugadores, indice-1);
                 }
             });
         } else{
@@ -405,6 +411,7 @@ $("#btn-promediar").on("click", function(){
         method : "POST",
         url : "http://localhost:8080/rest/jugadoresCalificados/actualizarPromedio?partido=" + idPartido,
         success : function (data) {
+            alert("Se estan promediando las calificaciones para el partido: " + idPartido);
             console.log("Se envio la orden de promediar las calificaciones para los jugadores del partido: " + idPartido);
         },
         error : function() {
@@ -490,7 +497,7 @@ function onLoadRankingFans(){
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
-        url : "https://", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
+        url : "https://localhost:8080/rest/users/allAficionados",
         success : function (data) {
             appRankingFans.fans_vue = data;
         },
@@ -511,7 +518,7 @@ function onLoadRankingPeriodistas(){
     // Solicitud AJAX con jQuery para obtener los partidos ya calificados y promediados
     $.ajax({
         method : "GET",
-        url : "https://", //--> ACÁ IRÍA EL LINK DE DONDE SE OBTIENE LA INFO PARA PARTIDOS
+        url : "https://localhost:8080/rest/users/allPeriodistas",
         success : function (data) {
             appRankingPeriodistas.periodistas_vue = data;
         },
